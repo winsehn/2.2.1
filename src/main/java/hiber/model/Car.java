@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -21,6 +22,9 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @OneToOne(mappedBy = "car")
+    private User user;
 
     public Car() {
     }
@@ -54,12 +58,21 @@ public class Car {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Car{" +
                 "model='" + model + '\'' +
                 ", series=" + series +
                 ", id=" + id +
+                ", user=" + (user != null ? user.getFirstName() : null) +
                 '}';
     }
 

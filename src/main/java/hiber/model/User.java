@@ -1,10 +1,12 @@
 package hiber.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -15,6 +17,7 @@ import java.util.Objects;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -26,8 +29,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @OneToOne
-    @MapsId
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id")
     private Car car;
 
@@ -78,6 +80,9 @@ public class User {
 
     public void setCar(Car car) {
         this.car = car;
+        if (car != null) {
+            car.setUser(this);
+        }
     }
 
     @Override
@@ -87,8 +92,12 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", car=" + car +
-                '}';
+                ", car=" + (car != null ?
+                "{" + "model='" + car.getModel() + '\'' +
+                        ", series=" + car.getSeries() +
+                        ", id=" + car.getId() : null)
+                +
+                '}' + "}";
     }
 
     @Override
