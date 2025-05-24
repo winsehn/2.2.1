@@ -32,6 +32,11 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    public void updateCar(Car car) {
+        sessionFactory.getCurrentSession().update(car);
+    }
+
+    @Override
     public void deleteUser(User user) {
         sessionFactory.getCurrentSession().delete(user);
     }

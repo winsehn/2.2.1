@@ -35,6 +35,12 @@ public class UserServiceImp implements UserService {
 
     @Transactional
     @Override
+    public void updateCar(Car car) {
+        userDao.updateCar(car);
+    }
+
+    @Transactional
+    @Override
     public void deleteUser(User user) {
         userDao.deleteUser(user);
     }

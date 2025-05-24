@@ -19,6 +19,8 @@ public interface UserDao {
 
     void updateUser(User user);
 
+    void updateCar(Car car);
+
     void deleteUser(User user);
 
     void deleteCar(Car car);
